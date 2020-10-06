@@ -23,8 +23,9 @@
     "encoding": {
         "x": { "field": "Year Constructed", "type": "quantitative"},
         "y": { "field": "Square Footage", "type": "quantitative"},
-        "color": {"aggregate": "sum", "field": "Total Floors",
+        "color": {"aggregate": "count", "field": "Total Floors",
             "scale": {"type": "log"}
+}
     }
 };
        vegaEmbed('#viz', vlSpec);
