@@ -16,18 +16,15 @@
       </div>
       <script>
       var vlSpec = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
     "data": {
-        "url": "https://uiuc-ischool-dataviz.github.io/spring2019online/week02/building_inventory.csv"},
-    "mark": "circle",
+        "url": "build_grouped.csv"},
+    "mark": "line",
     "encoding": {
-        "x": { "field": "Year Constructed", "type": "quantitative"},
-        "y": { "field": "Square Footage", "type": "quantitative"},
-        "color": {"aggregate": "count", "field": "Total Floors",
-            "scale": {"type": "log"}
-}
-    }
-};
+        "x": { "field": "Year Acquired", "timeUnit": "year"},
+        "y": { "field": "Square Footage", "type": "quantitative"}
+            }
+            };
        vegaEmbed('#viz', vlSpec);
       </script>
   </body>
