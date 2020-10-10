@@ -9,7 +9,10 @@
   <body>
       <p>
       This webpage illustrates the <strong>buildings.csv</strong> dataset. The visualization represents 
-      the relationship between Acquired Year and the Sum of Square Footage as a line graph.
+      the relationship between Acquired Year and Construction Year as a scatter plot. 
+        The bar chart represents the relationship between Congress Districts and Total Square Footage.
+        The Agency Name and Square Footage of each building can be observed by pointing on the individual points,
+        by using click and drag selection the Sum of selected buildings can be visualized in the secon plot. 
         Yerassyl Koshan
       </p>
       <div id="viz">
@@ -18,13 +21,51 @@
       var vlSpec = {
         "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
     "data": {
-        "url": "build_grouped.json"},
-    "mark": "line",
-    "encoding": {
-        "x": { "field": "Year Acquired", "timeUnit": "year"},
-        "y": { "field": "Square Footage", "type": "quantitative"}
+        "url": "build.json"},
+        "hconcat": [
+        {
+      "mark": {"type": "circle"},
+      "selection": {"clickanddrag": {"type": "interval", "encodings": ["y"]}},
+      "encoding": {
+        "x": {"field": "Year Acquired", "timeUnit": "year"},
+        "y": {"field": "Year Constructed", "timeUnit": "year"},
+        
+         "tooltip": [
+          {"field": "Agency Name", "type": "ordinal"},
+          {"field": "Square Footage", "type": "quantitative"}
+        ],
+        "opacity": {
+          "condition": {
+            "selection":"clickanddrag"
+          },
+          "value": 0.5
+
             }
-            };
+            }
+            },
+             {
+     "layer": [
+     {
+        "mark":"bar",
+        "encoding": {
+        "x": { "field": "Congress Dist",  "type": "ordinal"},
+        "y": {"aggregate": "sum", "type": "quantitative", "field": "Square Footage"},
+        "opacity": {"value": 0.2}
+        }
+        },
+        {
+        "mark": "bar",
+          "transform": [{"filter": {"selection": "clickanddrag"}}],
+          "encoding": {
+            "x": {"field": "Congress Dist",  "type": "ordinal"},
+            "y": {"aggregate": "sum", "type": "quantitative", "field": "Square Footage"}
+        }
+        }
+            ]
+            }
+            ]
+            }
+           ;
        vegaEmbed('#viz', vlSpec);
       </script>
   </body>
